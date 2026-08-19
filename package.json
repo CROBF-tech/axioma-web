@@ -1,0 +1,22 @@
+{
+  "name": "axioma",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "dev:api": "pnpm --filter @axioma/api dev",
+    "dev:web": "pnpm --filter @axioma/web dev",
+    "build": "pnpm -r build",
+    "db:push": "pnpm --filter @axioma/db db:push",
+    "db:generate": "pnpm --filter @axioma/db db:generate",
+    "db:migrate": "pnpm --filter @axioma/db db:migrate",
+    "db:seed": "pnpm --filter @axioma/db db:seed"
+  }
+}
