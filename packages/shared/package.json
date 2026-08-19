@@ -11,6 +11,10 @@
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "nanoid": "^5.0.0",
+    "zod": "4.4.3"
+  },
   "devDependencies": {
     "@types/node": "24.6.0",
     "@axioma/db": "workspace:*",

@@ -53,6 +53,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@axioma/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@axioma/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -105,6 +108,13 @@ importers:
         version: 4.1.11(@types/node@24.6.0)(vite@8.2.1(@types/node@24.6.0)(esbuild@0.28.2)(tsx@4.23.12))
 
   packages/shared:
+    dependencies:
+      nanoid:
+        specifier: ^5.0.0
+        version: 5.1.16
+      zod:
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@axioma/db':
         specifier: workspace:*
@@ -1240,6 +1250,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.16:
+    resolution: {integrity: sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   nanostores@1.5.1:
     resolution: {integrity: sha512-DNIX+HyFpo14fKGe0NsX9/aPzdKGiSZwX5xEMpDwQrDdo2iTiUYunOCCQLYwJrziKVe8ZOtVvcv0dEVI8lMx2g==}
     engines: {node: ^20.0.0 || >=22.0.0}
@@ -2172,6 +2187,8 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   nanoid@3.3.18: {}
+
+  nanoid@5.1.16: {}
 
   nanostores@1.5.1: {}
 
