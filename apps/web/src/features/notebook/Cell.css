@@ -1,0 +1,119 @@
+.cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.cell:hover {
+  border-color: var(--accent-border);
+}
+
+.cell--active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cell__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cell__kind {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  background: var(--surface-2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.cell__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.cell__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cell__input {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--fg);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 100%;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.cell__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.cell__input--text {
+  font-family: var(--sans);
+  background: var(--surface);
+}
+
+.cell__input:read-only {
+  opacity: 0.8;
+  cursor: default;
+}
+
+.cell__output,
+.cell__result {
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  color: var(--fg);
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem;
+}
+
+.cell__output code,
+.cell__result code {
+  font-family: inherit;
+}
+
+.cell__plot-placeholder {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+
+.cell__error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
