@@ -8,6 +8,17 @@ function isNode(): boolean {
   return typeof process !== "undefined" && process.env !== undefined;
 }
 
+/**
+ * `true` cuando el código corre en un entorno Node.js (servidor).
+ * Útil para guardas explícitas de runtime.
+ */
+export const isServer = isNode();
+
+/**
+ * `true` cuando el código corre en un entorno de navegador.
+ */
+export const isBrowser = !isServer;
+
 export function getDbUrl(): string {
   if (isNode()) {
     const url = process.env.DATABASE_URL;

@@ -1,4 +1,11 @@
-import { getDbUrl, getDbAuthToken, getTestDbUrl, getTestDbAuthToken } from "./env.ts";
+import {
+  getDbUrl,
+  getDbAuthToken,
+  getTestDbUrl,
+  getTestDbAuthToken,
+  isBrowser,
+  isServer,
+} from "./env.ts";
 
 export type { NotebookRow, NewNotebookRow } from "./schema/notebooks.ts";
 export type { CellRow, NewCellRow } from "./schema/cells.ts";
@@ -16,6 +23,8 @@ export const databaseUrl = getDbUrl;
 export const databaseAuthToken = getDbAuthToken;
 export const testDatabaseUrl = getTestDbUrl;
 export const testDatabaseAuthToken = getTestDbAuthToken;
+
+export { isBrowser, isServer };
 
 export * from "./browser.ts";
 

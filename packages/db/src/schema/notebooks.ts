@@ -16,6 +16,7 @@ export const notebooks = sqliteTable(
   (t) => [
     index("notebooks_owner_idx").on(t.ownerId),
     index("notebooks_owner_updated_idx").on(t.ownerId, t.updatedAt),
+    index("notebooks_folder_idx").on(t.folderId),
     index("notebooks_slug_idx").on(t.publicSlug),
   ],
 );

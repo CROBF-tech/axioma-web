@@ -14,7 +14,10 @@ export const subscriptions = sqliteTable(
     createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
   },
-  (t) => [index("subscriptions_status_idx").on(t.status)],
+  (t) => [
+    index("subscriptions_status_idx").on(t.status),
+    index("subscriptions_user_status_idx").on(t.userId, t.status),
+  ],
 );
 
 export type SubscriptionRow = typeof subscriptions.$inferSelect;
