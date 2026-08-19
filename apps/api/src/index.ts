@@ -2,6 +2,15 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import type { ApiDeps } from "./services/deps.ts";
+import type { Session, User } from "./auth/auth.ts";
+import { createMeRouter } from "./routes/me.ts";
+
+export type AppEnv = {
+  Variables: {
+    user: User;
+    session: Session;
+  };
+};
 
 export interface CreateAppOptions {
   env: {
@@ -11,8 +20,9 @@ export interface CreateAppOptions {
   deps: ApiDeps;
 }
 
-export function createApp(opts: CreateAppOptions): Hono {
-  const app = new Hono();
+export function createApp(opts: CreateAppOptions): Hono<AppEnv> {
+  const app = new Hono<AppEnv>();
+  const { deps } = opts;
 
   app.use("*", logger());
   app.use(
@@ -22,6 +32,12 @@ export function createApp(opts: CreateAppOptions): Hono {
       credentials: true,
     }),
   );
+
+  app.all("/api/auth/*", (c) => {
+    return deps.auth.handler(c.req.raw);
+  });
+
+  app.route("/api/me", createMeRouter(deps.auth));
 
   app.get("/health", (c) =>
     c.json({

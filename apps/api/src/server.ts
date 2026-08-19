@@ -1,10 +1,18 @@
 import { serve } from "@hono/node-server";
+import { createDb } from "@axioma/db";
 import { loadEnv } from "./env.ts";
+import { createAuth } from "./auth/auth.ts";
 import { makeDeps } from "./services/deps.ts";
 import { createApp } from "./index.ts";
 
 const env = loadEnv();
-const deps = await makeDeps(env.DATABASE_URL, env.DATABASE_AUTH_TOKEN);
+const { db } = await createDb({ url: env.DATABASE_URL, authToken: env.DATABASE_AUTH_TOKEN });
+const auth = createAuth(db, {
+  secret: env.BETTER_AUTH_SECRET,
+  baseURL: env.BETTER_AUTH_URL,
+  nodeEnv: env.NODE_ENV,
+});
+const deps = makeDeps(db, auth);
 const app = createApp({ env, deps });
 
 const PORT = Number(process.env.PORT ?? env.PORT ?? 3000);

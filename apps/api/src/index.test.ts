@@ -1,15 +1,28 @@
 import { describe, it, expect } from "vitest";
 import { Hono } from "hono";
-import { createApp } from "./index.ts";
+import { createApp, type AppEnv } from "./index.ts";
+import type { ApiDeps } from "./services/deps.ts";
 
 function makeApp() {
+  const deps = {
+    db: {} as unknown as ApiDeps["db"],
+    auth: {
+      handler: (_req: Request) =>
+        Promise.resolve(
+          new Response(JSON.stringify({ ok: true }), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          }),
+        ),
+    } as unknown as ApiDeps["auth"],
+  };
   return createApp({
     env: { NODE_ENV: "test", CORS_ORIGIN: "http://localhost:5173" },
-    deps: { db: {} as unknown as import("./services/deps.ts").ApiDeps["db"] },
+    deps,
   });
 }
 
-async function req(app: Hono, path: string, init?: RequestInit) {
+async function req(app: Hono<AppEnv>, path: string, init?: RequestInit) {
   return app.request(path, init);
 }
 
@@ -42,5 +55,17 @@ describe("app", () => {
   it("instancia es una Hono app válida", () => {
     const app = makeApp();
     expect(app).toBeInstanceOf(Hono);
+  });
+
+  it("api/auth/* delega al handler de better-auth", async () => {
+    const app = makeApp();
+    const res = await req(app, "/api/auth/sign-up/email", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email: "a@b.c", password: "longpassword" }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { ok: boolean };
+    expect(body.ok).toBe(true);
   });
 });

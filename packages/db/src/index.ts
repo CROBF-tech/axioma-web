@@ -11,6 +11,16 @@ export type { NotebookRow, NewNotebookRow } from "./schema/notebooks.ts";
 export type { CellRow, NewCellRow } from "./schema/cells.ts";
 export type { FolderRow, NewFolderRow } from "./schema/folders.ts";
 export type { SubscriptionRow, NewSubscriptionRow } from "./schema/subscriptions.ts";
+export type {
+  UserRow,
+  NewUserRow,
+  SessionRow,
+  NewSessionRow,
+  AccountRow,
+  NewAccountRow,
+  VerificationRow,
+  NewVerificationRow,
+} from "./schema/auth.ts";
 
 export * as schema from "./schema/index.ts";
 

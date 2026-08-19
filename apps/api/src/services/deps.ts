@@ -1,15 +1,11 @@
-import { createDb, createTestDbFromEnv, type DbClient } from "@axioma/db";
+import type { DbClient } from "@axioma/db";
+import type { Auth } from "../auth/auth.ts";
 
 export interface ApiDeps {
   db: DbClient;
+  auth: Auth;
 }
 
-export async function makeDeps(databaseUrl: string, authToken?: string): Promise<ApiDeps> {
-  const { db } = await createDb({ url: databaseUrl, authToken });
-  return { db };
-}
-
-export async function makeTestDeps(): Promise<ApiDeps> {
-  const { db } = createTestDbFromEnv();
-  return { db };
+export function makeDeps(db: DbClient, auth: Auth): ApiDeps {
+  return { db, auth };
 }
