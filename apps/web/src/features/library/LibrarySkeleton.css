@@ -1,0 +1,37 @@
+.library-skeleton {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.library-skeleton__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.library-skeleton__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.library-skeleton__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .library-skeleton {
+    grid-template-columns: 1fr;
+  }
+}

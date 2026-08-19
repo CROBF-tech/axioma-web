@@ -140,11 +140,12 @@ export async function saveCell(cell: Cell): Promise<void> {
     entityId: cell.id,
     op: "update",
     payload: {
+      notebookId: cell.notebookId,
       input: cell.input,
       output: cell.output ?? null,
       references: cell.references ?? null,
       orderIdx: cell.orderIdx,
-    } as UpdateCellRequest,
+    } as UpdateCellRequest & { notebookId: string },
     createdAt: Date.now(),
   })
 }

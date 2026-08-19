@@ -1,0 +1,28 @@
+.ax-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.ax-badge--default {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.ax-badge--warning {
+  background: var(--warning);
+  color: var(--fg);
+}
+
+.ax-badge--danger {
+  background: var(--danger);
+  color: var(--danger-fg);
+}

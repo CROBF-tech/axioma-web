@@ -5,6 +5,8 @@ import { Button } from "../../components/ui/index.ts"
 import { updateNotebook } from "@axioma/db"
 import CellList from "./CellList.tsx"
 import { useNotebookShortcuts } from "./useNotebookShortcuts.ts"
+import NotebookSkeleton from "./NotebookSkeleton.tsx"
+import SharePanel from "./SharePanel.tsx"
 import "./NotebookView.css"
 
 export type NotebookViewProps = {
@@ -36,7 +38,7 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
   }
 
   if (loading && !notebook) {
-    return <div className="notebook-view__empty">Cargando notebook...</div>
+    return <NotebookSkeleton />
   }
 
   if (error) {
@@ -79,6 +81,13 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
             + Añadir celda
           </Button>
         </div>
+      )}
+      {!readOnly && notebook && (
+        <SharePanel
+          notebookId={notebook.id}
+          initialPublic={notebook.isPublic}
+          initialSlug={notebook.publicSlug}
+        />
       )}
     </div>
   )

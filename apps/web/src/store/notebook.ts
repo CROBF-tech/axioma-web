@@ -9,6 +9,7 @@ import {
 } from "@axioma/db"
 import { compute } from "@axioma/engine"
 import type { EngineResult } from "@axioma/engine"
+import { parseRefs, resolveRefs, validateRefs } from "../features/notebook/refs.ts"
 
 const SAVE_DEBOUNCE_MS = 800
 const DEFAULT_COMPUTE_KIND = "simplify"
@@ -275,7 +276,37 @@ export const useNotebookStore = create<NotebookStore>((set, get) => ({
         [id]: { running: true, error: null, result: null },
       },
     }))
-    return compute({ kind: DEFAULT_COMPUTE_KIND, expr: cell.input })
+
+    const previousCells = get().cells.filter((c) => c.orderIdx < cell.orderIdx)
+    const refs = parseRefs(cell.input)
+    const validation = validateRefs(cell.input, previousCells, cell.id)
+
+    if (validation.missing.length > 0) {
+      const missing = validation.missing.join(", ")
+      const message = `Referencia inválida: $$${missing} no existe o aún no tiene resultado`
+      set((s) => ({
+        runtimes: {
+          ...s.runtimes,
+          [id]: { running: false, error: message, result: null },
+        },
+        cells: s.cells.map((c) => (c.id === id ? { ...c, references: refs } : c)),
+      }))
+      return Promise.resolve()
+    }
+
+    if (validation.cyclic) {
+      set((s) => ({
+        runtimes: {
+          ...s.runtimes,
+          [id]: { running: false, error: "Referencia cíclica detectada", result: null },
+        },
+        cells: s.cells.map((c) => (c.id === id ? { ...c, references: refs } : c)),
+      }))
+      return Promise.resolve()
+    }
+
+    const expr = resolveRefs(cell.input, previousCells)
+    return compute({ kind: DEFAULT_COMPUTE_KIND, expr })
       .then((result) => {
         set((s) => ({
           runtimes: {
@@ -283,7 +314,7 @@ export const useNotebookStore = create<NotebookStore>((set, get) => ({
             [id]: { running: false, error: result.ok ? null : (result.error?.message ?? null), result },
           },
           cells: s.cells.map((c) =>
-            c.id === id ? { ...c, output: result.latex ?? c.output } : c,
+            c.id === id ? { ...c, output: result.latex ?? c.output, references: refs } : c,
           ),
         }))
         markDirty(id)
@@ -296,6 +327,7 @@ export const useNotebookStore = create<NotebookStore>((set, get) => ({
             ...s.runtimes,
             [id]: { running: false, error: message, result: null },
           },
+          cells: s.cells.map((c) => (c.id === id ? { ...c, references: refs } : c)),
         }))
       })
   },

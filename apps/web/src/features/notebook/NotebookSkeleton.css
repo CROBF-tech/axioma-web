@@ -1,0 +1,28 @@
+.notebook-skeleton {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notebook-skeleton__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.notebook-skeleton__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.notebook-skeleton__cells {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

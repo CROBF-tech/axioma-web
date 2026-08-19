@@ -102,3 +102,27 @@
   border-radius: 12px;
   padding: 1.5rem;
 }
+
+.ax-skeleton {
+  display: inline-block;
+  background: var(--surface-2);
+  border-radius: 4px;
+  animation: ax-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.ax-skeleton--circle {
+  border-radius: 50%;
+}
+
+.ax-skeleton--text {
+  border-radius: 2px;
+}
+
+@keyframes ax-skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

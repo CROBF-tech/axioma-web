@@ -9,10 +9,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      '@axioma/db': path.resolve(__dirname, '../../packages/db/src/index.ts'),
-      '@axioma/engine': path.resolve(__dirname, '../../packages/engine/src/index.ts'),
-      '@axioma/shared': path.resolve(__dirname, '../../packages/shared/src/index.ts'),
-    },
+    alias: [
+      { find: "@axioma/db/schema", replacement: path.resolve(__dirname, "../../packages/db/src/schema/index.ts") },
+      { find: "@axioma/db", replacement: path.resolve(__dirname, "../../packages/db/src/index.ts") },
+      { find: "@axioma/engine", replacement: path.resolve(__dirname, "../../packages/engine/src/index.ts") },
+      { find: "@axioma/shared", replacement: path.resolve(__dirname, "../../packages/shared/src/index.ts") },
+    ],
   },
 })

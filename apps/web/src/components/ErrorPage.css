@@ -1,0 +1,22 @@
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-page__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.error-page__message {
+  font-size: 1.125rem;
+  color: var(--text);
+  max-width: 480px;
+}

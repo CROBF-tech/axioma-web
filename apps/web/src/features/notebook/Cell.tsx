@@ -3,6 +3,7 @@ import { CSS } from "@dnd-kit/utilities"
 import type { Cell as CellType } from "@axioma/db"
 import { useNotebookStore } from "../../store/notebook.ts"
 import { Button } from "../../components/ui/index.ts"
+import MathInput from "./MathInput.tsx"
 import PlotCell from "./PlotCell.tsx"
 import "./Cell.css"
 
@@ -16,6 +17,7 @@ export type CellProps = {
 export default function Cell({ cell, active, readOnly = false, onActivate }: CellProps) {
   const store = useNotebookStore()
   const runtime = store.runtimes[cell.id]
+  const previousCells = store.cells.filter((c) => c.orderIdx < cell.orderIdx)
   const {
     attributes,
     listeners,
@@ -86,14 +88,12 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
 
       {cell.kind === "math" && (
         <div className="cell__body">
-          <textarea
-            className="cell__input"
+          <MathInput
             value={cell.input}
-            onChange={(e) => handleInputChange(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onChange={handleInputChange}
+            onRun={handleRun}
             readOnly={readOnly || runtime?.running}
-            placeholder="Escribe una expresión matemática..."
-            rows={3}
+            cells={previousCells}
           />
           {cell.output && (
             <div className="cell__output">

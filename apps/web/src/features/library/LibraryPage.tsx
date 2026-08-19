@@ -11,6 +11,7 @@ import {
 } from "../../data/repository.ts"
 import FolderTree from "./FolderTree.tsx"
 import NotebookItem from "./NotebookItem.tsx"
+import LibrarySkeleton from "./LibrarySkeleton.tsx"
 import "./LibraryPage.css"
 
 export default function LibraryPage() {
@@ -68,13 +69,7 @@ export default function LibraryPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="library-page">
-        <aside className="library-page__sidebar">
-          <div className="library-page__empty">Cargando…</div>
-        </aside>
-      </div>
-    )
+    return <LibrarySkeleton />
   }
 
   if (error) {

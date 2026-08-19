@@ -6,3 +6,6 @@ export type { InputProps } from "./Input.tsx"
 
 export { Card } from "./Card.tsx"
 export type { CardProps } from "./Card.tsx"
+
+export { Skeleton } from "./Skeleton.tsx"
+export type { SkeletonProps } from "./Skeleton.tsx"
