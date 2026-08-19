@@ -33,3 +33,14 @@ export type NewCell = Omit<Cell, "id" | "createdAt" | "updatedAt"> &
   Partial<Pick<Cell, "id" | "createdAt" | "updatedAt">>;
 
 export type CellKind = Cell["kind"];
+
+export type Folder = {
+  id: string;
+  ownerId: string;
+  name: string;
+  parentId?: string | null;
+  createdAt: Date;
+};
+
+export type NewFolder = Omit<Folder, "id" | "createdAt"> &
+  Partial<Pick<Folder, "id" | "createdAt">>;
