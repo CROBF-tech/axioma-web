@@ -53,25 +53,6 @@ export const PLANS = {
   annual: { amount: 18, currency: "USD", frequency: 12, frequencyType: "months" },
 } as const;
 
-export const PERMISSION_MATRIX = [
-  { method: "GET",    path: "/api/notebooks",         auth: true,  sub: true  },
-  { method: "POST",   path: "/api/notebooks",         auth: true,  sub: true  },
-  { method: "GET",    path: "/api/notebooks/:id",     auth: true,  sub: true  },
-  { method: "PATCH",  path: "/api/notebooks/:id",     auth: true,  sub: true  },
-  { method: "DELETE", path: "/api/notebooks/:id",     auth: true,  sub: true  },
-  { method: "POST",   path: "/api/notebooks/:id/cells", auth: true, sub: true },
-  { method: "PATCH",  path: "/api/cells/:id",         auth: true,  sub: true  },
-  { method: "DELETE", path: "/api/cells/:id",         auth: true,  sub: true  },
-  { method: "POST",   path: "/api/notebooks/:id/reorder", auth: true, sub: true },
-  { method: "POST",   path: "/api/folders",           auth: true,  sub: true  },
-  { method: "PATCH",  path: "/api/folders/:id",       auth: true,  sub: true  },
-  { method: "DELETE", path: "/api/folders/:id",       auth: true,  sub: true  },
-  { method: "GET",    path: "/public/notebooks/:slug", auth: false, sub: false },
-  { method: "GET",    path: "/billing/status",        auth: true,  sub: false },
-  { method: "POST",   path: "/billing/checkout",       auth: true, sub: false },
-  { method: "POST",   path: "/billing/cancel",         auth: true, sub: true  },
-] as const;
-
 export const NOTEBOOK_SHORTCUTS = [
   { key: "Enter",  ctrlOrCmd: true,  action: "run-cell",   label: "Ejecutar celda" },
   { key: "ArrowDown", ctrlOrCmd: false, action: "next-cell", label: "Celda siguiente" },

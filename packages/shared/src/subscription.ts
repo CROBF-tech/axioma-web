@@ -1,5 +1,5 @@
 import type { SubscriptionPlan, SubscriptionStatus } from "./index.ts";
-import { PERMISSION_MATRIX, PLANS } from "./constants.ts";
+import { PLANS } from "./constants.ts";
 
 function toDate(value: Date | number | null | undefined): Date | null {
   if (value === null || value === undefined) return null;
@@ -67,26 +67,6 @@ export function mpEventToSubscriptionStatus(eventType: string): SubscriptionStat
     default:
       return "expired";
   }
-}
-
-export function requiresSubscription(method: string, path: string): boolean {
-  for (const rule of PERMISSION_MATRIX) {
-    if (rule.method === method && matchPath(rule.path, path)) return rule.sub;
-  }
-  return false;
-}
-
-function matchPath(pattern: string, path: string): boolean {
-  const patternParts = pattern.split("/").filter(Boolean);
-  const pathParts = path.split("/").filter(Boolean);
-  if (patternParts.length !== pathParts.length) return false;
-  for (let i = 0; i < patternParts.length; i++) {
-    const pp = patternParts[i];
-    if (pp === undefined) return false;
-    if (pp.startsWith(":")) continue;
-    if (pp !== pathParts[i]) return false;
-  }
-  return true;
 }
 
 export async function verifyMpSignature(
