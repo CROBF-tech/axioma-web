@@ -1,0 +1,129 @@
+.pricing {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pricing__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pricing__header h1 {
+  margin: 0;
+}
+
+.pricing__header p {
+  color: var(--text);
+}
+
+.pricing__loading {
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+}
+
+.pricing__active {
+  color: var(--text-h);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+}
+
+.pricing__error {
+  color: var(--danger);
+  background: var(--danger-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--danger);
+}
+
+.pricing__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.pricing__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.75rem;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.pricing__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pricing__card-header h2 {
+  margin: 0;
+  color: var(--text-h);
+}
+
+.pricing__badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  color: var(--accent-fg);
+  background: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+.pricing__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.pricing__price-amount {
+  font-family: var(--heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.pricing__price-period {
+  color: var(--text);
+}
+
+.pricing__cta {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  color: var(--accent-fg);
+  background: var(--accent);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.pricing__cta:hover:not(:disabled) {
+  border-color: var(--accent-border);
+}
+
+.pricing__cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pricing__cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
