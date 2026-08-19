@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@axioma/db': path.resolve(__dirname, '../../packages/db/src/index.ts'),
+      '@axioma/engine': path.resolve(__dirname, '../../packages/engine/src/index.ts'),
       '@axioma/shared': path.resolve(__dirname, '../../packages/shared/src/index.ts'),
     },
   },

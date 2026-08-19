@@ -10,6 +10,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@axioma/db": ["../../packages/db/src/index.ts"],
+      "@axioma/engine": ["../../packages/engine/src/index.ts"],
       "@axioma/shared": ["../../packages/shared/src/index.ts"]
     }
   },
