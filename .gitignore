@@ -24,6 +24,11 @@ pnpm-debug.log*
 .idea
 .DS_Store
 
+# local agent / skill configs
+.agents/
+.claude/
+skills-lock.json
+
 # coverage
 coverage
 
