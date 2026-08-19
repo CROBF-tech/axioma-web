@@ -4,6 +4,13 @@ import { logger } from "hono/logger";
 import type { ApiDeps } from "./services/deps.ts";
 import type { Session, User } from "./auth/auth.ts";
 import { createMeRouter } from "./routes/me.ts";
+import { createNotebooksRouter } from "./routes/notebooks.ts";
+import { createCellsRouter } from "./routes/cells.ts";
+import { createBillingRouter } from "./routes/billing.ts";
+import { createWebhooksRouter } from "./routes/webhooks.ts";
+import { createFoldersRouter } from "./routes/folders.ts";
+import { createShareRouter } from "./routes/share.ts";
+import { createPublicRouter } from "./routes/public.ts";
 
 export type AppEnv = {
   Variables: {
@@ -16,6 +23,8 @@ export interface CreateAppOptions {
   env: {
     NODE_ENV: "development" | "test" | "production";
     CORS_ORIGIN: string;
+    MP_WEBHOOK_SECRET: string;
+    WEB_URL: string;
   };
   deps: ApiDeps;
 }
@@ -38,6 +47,28 @@ export function createApp(opts: CreateAppOptions): Hono<AppEnv> {
   });
 
   app.route("/api/me", createMeRouter(deps.auth));
+  app.route("/api/notebooks", createNotebooksRouter(deps));
+  app.route("/api/cells", createCellsRouter(deps));
+  app.route(
+    "/billing",
+    createBillingRouter({
+      db: deps.db,
+      auth: deps.auth,
+      mp: deps.mp,
+      webUrl: opts.env.WEB_URL,
+    }),
+  );
+  app.route(
+    "/webhooks",
+    createWebhooksRouter({
+      db: deps.db,
+      mpWebhookSecret: opts.env.MP_WEBHOOK_SECRET,
+      nodeEnv: opts.env.NODE_ENV,
+    }),
+  );
+  app.route("/api/folders", createFoldersRouter(deps));
+  app.route("/api", createShareRouter(deps, { webUrl: opts.env.WEB_URL }));
+  app.route("/public", createPublicRouter(deps));
 
   app.get("/health", (c) =>
     c.json({

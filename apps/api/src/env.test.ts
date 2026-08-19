@@ -5,6 +5,9 @@ const base = {
   DATABASE_URL: "libsql://test.turso.io",
   BETTER_AUTH_SECRET: "x".repeat(32),
   BETTER_AUTH_URL: "http://localhost:3000",
+  MP_ACCESS_TOKEN: "TEST-mp-token",
+  MP_WEBHOOK_SECRET: "mp-webhook-secret",
+  WEB_URL: "http://localhost:5173",
 } as Record<string, string>;
 
 describe("loadEnv", () => {

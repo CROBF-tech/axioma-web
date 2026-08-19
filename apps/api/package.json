@@ -9,7 +9,8 @@
     "start": "node --import tsx/esm src/server.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev:simulate-webhook": "tsx scripts/simulate-webhook.ts"
   },
   "dependencies": {
     "@axioma/db": "workspace:*",
@@ -20,6 +21,7 @@
     "better-auth": "1.7.1",
     "drizzle-orm": "0.45.2",
     "hono": "4.13.3",
+    "mercadopago": "^3.4.0",
     "zod": "4.4.3"
   },
   "devDependencies": {

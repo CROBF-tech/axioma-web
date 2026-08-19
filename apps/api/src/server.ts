@@ -3,6 +3,7 @@ import { createDb } from "@axioma/db";
 import { loadEnv } from "./env.ts";
 import { createAuth } from "./auth/auth.ts";
 import { makeDeps } from "./services/deps.ts";
+import { createMpClient } from "./services/mercadopago.ts";
 import { createApp } from "./index.ts";
 
 const env = loadEnv();
@@ -12,7 +13,8 @@ const auth = createAuth(db, {
   baseURL: env.BETTER_AUTH_URL,
   nodeEnv: env.NODE_ENV,
 });
-const deps = makeDeps(db, auth);
+const mp = createMpClient(env.MP_ACCESS_TOKEN);
+const deps = makeDeps(db, auth, mp);
 const app = createApp({ env, deps });
 
 const PORT = Number(process.env.PORT ?? env.PORT ?? 3000);

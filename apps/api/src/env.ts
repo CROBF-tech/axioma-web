@@ -10,6 +10,9 @@ const EnvSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(32, "BETTER_AUTH_SECRET debe tener al menos 32 caracteres"),
   BETTER_AUTH_URL: z.string().url(),
   CORS_ORIGIN: z.string().url().default("http://localhost:5173"),
+  MP_ACCESS_TOKEN: z.string().min(1),
+  MP_WEBHOOK_SECRET: z.string().min(1),
+  WEB_URL: z.string().url(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

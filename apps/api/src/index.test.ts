@@ -15,9 +15,21 @@ function makeApp() {
           }),
         ),
     } as unknown as ApiDeps["auth"],
+    mp: {
+      preapproval: {
+        create: () =>
+          Promise.resolve({ id: "mp-id", init_point: "https://mp.test/init" }),
+        update: () => Promise.resolve({ id: "mp-id", status: "cancelled" }),
+      },
+    } as unknown as ApiDeps["mp"],
   };
   return createApp({
-    env: { NODE_ENV: "test", CORS_ORIGIN: "http://localhost:5173" },
+    env: {
+      NODE_ENV: "test",
+      CORS_ORIGIN: "http://localhost:5173",
+      MP_WEBHOOK_SECRET: "test-secret",
+      WEB_URL: "http://localhost:5173",
+    },
     deps,
   });
 }
