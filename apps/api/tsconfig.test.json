@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "types": ["node", "vitest/globals"],
+    "noEmit": true,
+    "paths": {
+      "@api/*": ["./src/*"],
+      "@axioma/db": ["../../packages/db/src/index.ts"],
+      "@axioma/db/schema": ["../../packages/db/src/schema/index.ts"],
+      "@axioma/shared": ["../../packages/shared/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "vitest.config.ts"],
+  "exclude": ["dist", "node_modules"]
+}

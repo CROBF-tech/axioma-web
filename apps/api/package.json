@@ -1,0 +1,31 @@
+{
+  "name": "@axioma/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc --noEmit",
+    "start": "node --import tsx/esm src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@axioma/db": "workspace:*",
+    "@axioma/shared": "workspace:*",
+    "@better-auth/drizzle-adapter": "1.7.1",
+    "@hono/node-server": "2.1.1",
+    "@libsql/client": "0.17.4",
+    "better-auth": "1.7.1",
+    "drizzle-orm": "0.45.2",
+    "hono": "4.13.3",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.6.0",
+    "tsx": "4.23.12",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11"
+  }
+}
