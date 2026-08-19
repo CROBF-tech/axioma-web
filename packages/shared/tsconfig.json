@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "outDir": "./dist",
+    "types": ["node"],
+    "composite": true,
+    "noEmit": true,
+    "paths": {
+      "@axioma/db": ["./packages/db/src/index.ts"],
+      "@axioma/db/schema": ["./packages/db/src/schema/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "../db/src/**/*.ts"],
+  "exclude": ["dist", "node_modules", "**/*.test.ts"]
+}
