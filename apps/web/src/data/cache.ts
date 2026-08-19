@@ -30,7 +30,7 @@ export function cellToCache(cell: Cell): CellCache {
   }
 }
 
-export function folderToCache(folder: Folder): FolderCache {
+export function folderToCache(folder: { id: string; ownerId: string; name: string; parentId?: string | null; createdAt: Date }): FolderCache {
   return {
     id: folder.id,
     ownerId: folder.ownerId,

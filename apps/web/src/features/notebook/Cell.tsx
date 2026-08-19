@@ -1,3 +1,5 @@
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 import type { Cell as CellType } from "@axioma/db"
 import { useNotebookStore } from "../../store/notebook.ts"
 import { Button } from "../../components/ui/index.ts"
@@ -13,6 +15,19 @@ export type CellProps = {
 export default function Cell({ cell, active, readOnly = false, onActivate }: CellProps) {
   const store = useNotebookStore()
   const runtime = store.runtimes[cell.id]
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: cell.id, disabled: readOnly })
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
 
   function handleInputChange(value: string) {
     store.updateCellInput(cell.id, value)
@@ -36,7 +51,10 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
 
   return (
     <article
-      className={["cell", active ? "cell--active" : ""].filter(Boolean).join(" ")}
+      ref={setNodeRef}
+      className={["cell", active ? "cell--active" : "", isDragging ? "cell--dragging" : ""].filter(Boolean).join(" ")}
+      style={style}
+      data-cell-id={cell.id}
       onClick={onActivate}
       onKeyDown={handleKeyDown}
       role="button"
@@ -44,9 +62,15 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
       aria-label={`Celda ${cell.kind}`}
     >
       <div className="cell__toolbar">
-        <span className="cell__kind">{cell.kind}</span>
+        {!readOnly && (
+          <span className="cell__drag-handle" {...attributes} {...listeners} aria-label="Reordenar celda" role="button" tabIndex={0}>
+            ⋮⋮
+          </span>
+        )}
+        {readOnly && <span className="cell__kind">{cell.kind}</span>}
         {!readOnly && (
           <div className="cell__actions">
+            <span className="cell__kind">{cell.kind}</span>
             {cell.kind === "math" && (
               <Button size="sm" variant="primary" onClick={handleRun} disabled={runtime?.running}>
                 {runtime?.running ? "Ejecutando..." : "▶ Ejecutar"}

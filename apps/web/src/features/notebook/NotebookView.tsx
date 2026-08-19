@@ -4,6 +4,7 @@ import type { CellKind } from "@axioma/db"
 import { Button } from "../../components/ui/index.ts"
 import { updateNotebook } from "@axioma/db"
 import CellList from "./CellList.tsx"
+import { useNotebookShortcuts } from "./useNotebookShortcuts.ts"
 import "./NotebookView.css"
 
 export type NotebookViewProps = {
@@ -12,6 +13,7 @@ export type NotebookViewProps = {
 }
 
 export default function NotebookView({ notebookId, readOnly = false }: NotebookViewProps) {
+  useNotebookShortcuts()
   const store = useNotebookStore()
   const { notebook, cells, loading, error } = store
   const [title, setTitle] = useState("")

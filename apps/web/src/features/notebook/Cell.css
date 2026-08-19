@@ -16,6 +16,12 @@
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
+.cell--dragging {
+  opacity: 0.6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+}
+
 .cell:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -36,6 +42,32 @@
   background: var(--surface-2);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+}
+
+.cell__drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  color: var(--text);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  user-select: none;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.cell:hover .cell__drag-handle {
+  opacity: 0.5;
+}
+
+.cell__drag-handle:hover {
+  opacity: 1;
+}
+
+.cell__drag-handle:active {
+  cursor: grabbing;
 }
 
 .cell__actions {

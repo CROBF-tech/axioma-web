@@ -1,0 +1,85 @@
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  color: var(--fg);
+}
+
+.result__latex {
+  font-size: 1rem;
+  color: var(--fg);
+}
+
+.result__latex--main {
+  font-size: 1.125rem;
+}
+
+.result__partial {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result__badge {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--warning);
+  background: var(--warning-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.result__partial-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.result__steps {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.result__summary {
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-h);
+  user-select: none;
+}
+
+.result__summary:hover {
+  color: var(--accent);
+}
+
+.result__steps-list {
+  margin: 0;
+  padding: 0.5rem 0.75rem 0.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result__step {
+  font-size: 0.9375rem;
+  color: var(--fg);
+}
+
+.result__step-raw {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--text);
+  background: var(--code-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  word-break: break-word;
+}

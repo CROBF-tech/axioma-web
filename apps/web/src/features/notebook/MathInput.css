@@ -1,0 +1,45 @@
+.math-field {
+  --_editor-bg: var(--code-bg);
+  --_editor-fg: var(--fg);
+  --_editor-border: var(--border);
+  --_editor-accent: var(--accent);
+
+  font-size: 1rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem;
+  border: 1px solid var(--_editor-border);
+  border-radius: 8px;
+  background: var(--_editor-bg);
+  color: var(--_editor-fg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.math-field::part(container) {
+  background: var(--_editor-bg);
+  color: var(--_editor-fg);
+}
+
+.math-field:focus {
+  outline: none;
+  border-color: var(--_editor-accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.math-field::part(placeholder) {
+  color: var(--text);
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .math-field::part(container) {
+  background: var(--_editor-bg);
+  color: var(--_editor-fg);
+}
+
+[data-theme="dark"] .math-field {
+  --_editor-bg: var(--code-bg);
+  --_editor-fg: var(--fg);
+  --_editor-border: var(--border);
+  --_editor-accent: var(--accent);
+}

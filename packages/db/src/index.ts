@@ -27,7 +27,7 @@ export * as schema from "./schema/index.ts";
 export type { DbClient, CreateDbOptions } from "./server.ts";
 export { createDbFromEnv, createTestDbFromEnv } from "./server.ts";
 
-export type { Notebook, NewNotebook, Cell, NewCell, CellKind } from "./types.ts";
+export type { Notebook, NewNotebook, Cell, NewCell, CellKind, Folder, NewFolder } from "./types.ts";
 
 export const databaseUrl = getDbUrl;
 export const databaseAuthToken = getDbAuthToken;

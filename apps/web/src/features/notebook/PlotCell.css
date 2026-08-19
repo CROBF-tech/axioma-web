@@ -1,0 +1,17 @@
+.plot-cell {
+  min-height: 260px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.plot-cell svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.plot-cell .function-plot {
+  width: 100%;
+}
