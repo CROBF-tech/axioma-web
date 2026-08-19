@@ -1,0 +1,116 @@
+.library-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.library-page__sidebar {
+  width: 320px;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.library-page__sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.library-page__sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.library-page__new-folder {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.library-page__new-folder-input {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+}
+
+.library-page__new-folder-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.library-page__main {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: auto;
+}
+
+.library-page__main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.library-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.library-page__notebook-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.library-page__notebook-item {
+  margin: 0;
+}
+
+.library-page__empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.library-page__empty-text {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.library-page__empty,
+.library-page__error {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.library-page__error {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: 8px;
+}

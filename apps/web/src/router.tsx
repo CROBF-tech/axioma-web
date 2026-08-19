@@ -5,26 +5,9 @@ import DesignPage from "./features/design/DesignPage.tsx"
 import PricingPage from "./features/billing/PricingPage.tsx"
 import RequireActiveSub from "./features/billing/RequireActiveSub.tsx"
 import NotebookView from "./features/notebook/NotebookView.tsx"
+import LibraryPage from "./features/library/LibraryPage.tsx"
 import { getPublicNotebook } from "@axioma/db"
 import { useEffect, useState } from "react"
-
-function Home() {
-  return (
-    <main>
-      <h1>Axioma</h1>
-      <p>Sistema de notebooks computables.</p>
-    </main>
-  )
-}
-
-function Library() {
-  return (
-    <main className="library">
-      <h1>Biblioteca</h1>
-      <p>Próximamente: árbol de carpetas y notebooks.</p>
-    </main>
-  )
-}
 
 function NotebookRoute() {
   const { id } = useParams()
@@ -61,13 +44,22 @@ function PublicNotebookRoute() {
   )
 }
 
+function Home() {
+  return (
+    <main>
+      <h1>Axioma</h1>
+      <p>Sistema de notebooks computables.</p>
+    </main>
+  )
+}
+
 export const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/pricing", element: <PricingPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/design", element: <DesignPage /> },
-  { path: "/library", element: <RequireActiveSub><Library /></RequireActiveSub> },
+  { path: "/library", element: <RequireActiveSub><LibraryPage /></RequireActiveSub> },
   { path: "/notebooks/:id", element: <NotebookRoute /> },
   { path: "/s/:slug", element: <PublicNotebookRoute /> },
 ])

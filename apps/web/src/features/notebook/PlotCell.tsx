@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import type { Cell } from "@axioma/db"
+import { parseLatexToFunctionPlotData } from "./parser.ts"
 import "./PlotCell.css"
 
 export type PlotCellProps = {
@@ -11,19 +12,19 @@ const PLOT_WIDTH = 640
 const PLOT_HEIGHT = 260
 const DEFAULT_FN = "sin(x)"
 
-function parseFunction(input: string): string {
-  const trimmed = input.trim()
-  if (!trimmed) return DEFAULT_FN
-  const afterEquals = trimmed.includes("=")
-    ? trimmed.slice(trimmed.indexOf("=") + 1).trim()
-    : trimmed
-  return afterEquals.replace(/\^/g, "**")
-}
-
 function readAccent(): string {
   return getComputedStyle(document.documentElement)
     .getPropertyValue("--accent")
     .trim()
+}
+
+function buildPlotData(input: string, accent: string) {
+  const parsed = parseLatexToFunctionPlotData(input, accent || "#6366f1")
+  if (parsed.length === 0) {
+    const color = accent || "#6366f1"
+    return [{ fn: DEFAULT_FN, color }]
+  }
+  return parsed
 }
 
 export default function PlotCell({ cell, readOnly = false }: PlotCellProps) {
@@ -39,8 +40,7 @@ export default function PlotCell({ cell, readOnly = false }: PlotCellProps) {
     async function render() {
       const accent = readAccent()
       accentRef.current = accent
-
-      const fn = parseFunction(cell.input)
+      const data = buildPlotData(cell.input, accent)
       const { default: functionPlot } = await import("function-plot")
       if (cancelled || !container) return
 
@@ -50,7 +50,7 @@ export default function PlotCell({ cell, readOnly = false }: PlotCellProps) {
         width: PLOT_WIDTH,
         height: PLOT_HEIGHT,
         grid: true,
-        data: [{ fn, color: accent || "#6366f1" }],
+        data,
       })
     }
 
@@ -73,7 +73,7 @@ export default function PlotCell({ cell, readOnly = false }: PlotCellProps) {
 
     async function rerender() {
       accentRef.current = accent
-      const fn = parseFunction(cell.input)
+      const data = buildPlotData(cell.input, accent)
       const { default: functionPlot } = await import("function-plot")
       if (cancelled || !container) return
 
@@ -83,7 +83,7 @@ export default function PlotCell({ cell, readOnly = false }: PlotCellProps) {
         width: PLOT_WIDTH,
         height: PLOT_HEIGHT,
         grid: true,
-        data: [{ fn, color: accent || "#6366f1" }],
+        data,
       })
     }
 

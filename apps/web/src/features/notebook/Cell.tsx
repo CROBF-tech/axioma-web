@@ -3,6 +3,7 @@ import { CSS } from "@dnd-kit/utilities"
 import type { Cell as CellType } from "@axioma/db"
 import { useNotebookStore } from "../../store/notebook.ts"
 import { Button } from "../../components/ui/index.ts"
+import PlotCell from "./PlotCell.tsx"
 import "./Cell.css"
 
 export type CellProps = {
@@ -123,7 +124,7 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
             readOnly={readOnly}
             placeholder="f(x)=x^2"
           />
-          <div className="cell__plot-placeholder">Gráfico (próximamente)</div>
+          <PlotCell cell={cell} readOnly={readOnly} />
         </div>
       )}
 
