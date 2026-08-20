@@ -4,10 +4,10 @@ import { Suspense, lazy } from "react"
 import type { Cell as CellType } from "@axioma/db"
 import { useNotebookStore } from "../../store/notebook.ts"
 import { Button } from "../../components/ui/index.ts"
-import MathInput from "./MathInput.tsx"
 import "./Cell.css"
 
 const PlotCell = lazy(() => import("./PlotCell.tsx"))
+const MathInput = lazy(() => import("./MathInput.tsx"))
 
 export type CellProps = {
   cell: CellType
@@ -104,13 +104,15 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
 
       {cell.kind === "math" && (
         <div className="cell__body">
-          <MathInput
-            value={cell.input}
-            onChange={handleInputChange}
-            onRun={handleRun}
-            readOnly={readOnly || runtime?.running}
-            cells={previousCells}
-          />
+          <Suspense fallback={null}>
+            <MathInput
+              value={cell.input}
+              onChange={handleInputChange}
+              onRun={handleRun}
+              readOnly={readOnly || runtime?.running}
+              cells={previousCells}
+            />
+          </Suspense>
           {cell.output && (
             <div className="cell__output">
               <code>{cell.output}</code>

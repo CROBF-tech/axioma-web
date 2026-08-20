@@ -9,7 +9,6 @@ function emitSyncQueueChanged() {
     try {
       fn()
     } catch {
-      // ignore listener errors
     }
   }
 }
@@ -67,6 +66,11 @@ export async function listSyncQueue(): Promise<SyncQueueEntry[]> {
 export async function markSyncConflict(id: number): Promise<void> {
   if (!db) return
   await db.syncQueue.update(id, { conflict: true })
+}
+
+export async function unmarkSyncConflict(id: number): Promise<void> {
+  if (!db) return
+  await db.syncQueue.update(id, { conflict: false })
 }
 
 export async function clearSyncQueue(): Promise<void> {

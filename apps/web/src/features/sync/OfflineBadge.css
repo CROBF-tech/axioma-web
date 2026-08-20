@@ -60,6 +60,16 @@
   background: color-mix(in srgb, var(--danger) 10%, transparent);
   color: var(--danger);
   font-weight: 600;
+  cursor: pointer;
+}
+
+.offline-badge__item--conflict:hover {
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+}
+
+.offline-badge__item--conflict:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: -2px;
 }
 
 .offline-badge__conflict-mark {

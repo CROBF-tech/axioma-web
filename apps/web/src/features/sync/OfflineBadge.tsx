@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Badge } from "../../components/ui/Badge.tsx"
 import type { SyncQueueEntry } from "@axioma/shared"
+import { ConflictResolverModal } from "./ConflictResolverModal.tsx"
 import "./OfflineBadge.css"
 
 export type OfflineBadgeProps = {
@@ -12,6 +13,7 @@ export type OfflineBadgeProps = {
 
 export function OfflineBadge({ count, conflicts, online, items = [] }: OfflineBadgeProps) {
   const [open, setOpen] = useState(false)
+  const [selected, setSelected] = useState<SyncQueueEntry | null>(null)
 
   if (online && count === 0) return null
 
@@ -19,6 +21,11 @@ export function OfflineBadge({ count, conflicts, online, items = [] }: OfflineBa
   const label = online
     ? hasConflicts ? `Cambios pendientes con conflictos` : `Cambios pendientes`
     : `Sin conexión — ${count} cambios pendientes`
+
+  function handleItemClick(item: SyncQueueEntry) {
+    if (!item.conflict) return
+    setSelected(item)
+  }
 
   return (
     <div className="offline-badge">
@@ -38,6 +45,15 @@ export function OfflineBadge({ count, conflicts, online, items = [] }: OfflineBa
             <li
               key={item.id ?? `${item.entity}-${item.entityId}`}
               className={["offline-badge__item", item.conflict ? "offline-badge__item--conflict" : ""].filter(Boolean).join(" ")}
+              onClick={() => handleItemClick(item)}
+              role={item.conflict ? "button" : undefined}
+              tabIndex={item.conflict ? 0 : undefined}
+              onKeyDown={(e) => {
+                if (item.conflict && (e.key === "Enter" || e.key === " ")) {
+                  e.preventDefault()
+                  handleItemClick(item)
+                }
+              }}
             >
               {item.op} {item.entity} {item.entityId}
               {item.conflict && <span className="offline-badge__conflict-mark"> — conflicto</span>}
@@ -45,6 +61,10 @@ export function OfflineBadge({ count, conflicts, online, items = [] }: OfflineBa
           ))}
         </ul>
       )}
+      <ConflictResolverModal
+        entry={selected}
+        onClose={() => setSelected(null)}
+      />
     </div>
   )
 }

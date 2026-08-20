@@ -33,7 +33,6 @@ let signInPromise: ReturnType<typeof authClient.signIn.email> | null = null
 let signInArgs: { email: string; password: string } | null = null
 
 export async function signInWithEmail(email: string, password: string) {
-  // Debounce accidental double-submits while a sign-in request is in flight.
   if (signInPromise && signInArgs?.email === email && signInArgs?.password === password) {
     return signInPromise
   }
