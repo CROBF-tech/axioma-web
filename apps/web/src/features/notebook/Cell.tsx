@@ -1,11 +1,13 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import { Suspense, lazy } from "react"
 import type { Cell as CellType } from "@axioma/db"
 import { useNotebookStore } from "../../store/notebook.ts"
 import { Button } from "../../components/ui/index.ts"
 import MathInput from "./MathInput.tsx"
-import PlotCell from "./PlotCell.tsx"
 import "./Cell.css"
+
+const PlotCell = lazy(() => import("./PlotCell.tsx"))
 
 export type CellProps = {
   cell: CellType
@@ -138,7 +140,9 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
             readOnly={readOnly}
             placeholder="f(x)=x^2"
           />
-          <PlotCell cell={cell} readOnly={readOnly} />
+          <Suspense fallback={null}>
+            <PlotCell cell={cell} readOnly={readOnly} />
+          </Suspense>
         </div>
       )}
 

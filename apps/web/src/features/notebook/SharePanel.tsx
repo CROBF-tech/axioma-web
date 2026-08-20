@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Button } from "../../components/ui/index.ts"
+import { buildPublicNotebookPath } from "@axioma/shared"
 import { toggleShare } from "@axioma/db"
 import "./SharePanel.css"
 
@@ -13,15 +14,20 @@ export default function SharePanel({ notebookId, initialPublic, initialSlug }: S
   const [isPublic, setIsPublic] = useState(initialPublic)
   const [slug, setSlug] = useState<string | null>(initialSlug ?? null)
   const [copied, setCopied] = useState(false)
+  const [toggling, setToggling] = useState(false)
 
-  const publicUrl = slug ? `${window.location.origin}/s/${slug}` : null
+  const publicUrl = slug ? `${window.location.origin}${buildPublicNotebookPath(slug)}` : null
 
   function handleToggle() {
+    if (toggling) return
     const next = !isPublic
-    void toggleShare(notebookId, next).then((res) => {
-      setIsPublic(res.isPublic)
-      setSlug(res.publicSlug)
-    })
+    setToggling(true)
+    void toggleShare(notebookId, next)
+      .then((res) => {
+        setIsPublic(res.isPublic)
+        setSlug(res.publicSlug)
+      })
+      .finally(() => setToggling(false))
   }
 
   function handleCopy() {
@@ -35,7 +41,7 @@ export default function SharePanel({ notebookId, initialPublic, initialSlug }: S
   return (
     <div className="share-panel">
       <label className="share-panel__toggle">
-        <input type="checkbox" checked={isPublic} onChange={handleToggle} />
+        <input type="checkbox" checked={isPublic} onChange={handleToggle} disabled={toggling} />
         <span>Compartir públicamente</span>
       </label>
       {isPublic && publicUrl && (

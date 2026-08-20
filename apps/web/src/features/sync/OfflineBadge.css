@@ -55,3 +55,15 @@
 .offline-badge__item:last-child {
   border-bottom: none;
 }
+
+.offline-badge__item--conflict {
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.offline-badge__conflict-mark {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}

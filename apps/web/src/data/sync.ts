@@ -23,7 +23,7 @@ import type {
 } from "@axioma/db"
 import type { SyncQueueEntry } from "@axioma/shared"
 import { mergeByUpdatedAt } from "@axioma/shared"
-import { countPendingSync, dequeueSync, enqueueSync, listSyncQueue, markSyncConflict } from "./syncQueue"
+import { countPendingSync, dequeueSync, enqueueSync, listSyncQueue, markSyncConflict } from "./syncQueue.ts"
 import { getNotebookFromCache, saveCellToCache, saveNotebookToCache } from "./cache"
 
 let syncing = false
