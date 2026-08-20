@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNotebookStore } from "../../store/notebook.ts"
 import type { CellKind } from "@axioma/db"
 import { Button } from "../../components/ui/index.ts"
+import { EmptyState } from "../../components/ui/EmptyState.tsx"
 import { updateNotebook } from "@axioma/db"
 import CellList from "./CellList.tsx"
 import { useNotebookShortcuts } from "./useNotebookShortcuts.ts"
@@ -9,20 +10,26 @@ import NotebookSkeleton from "./NotebookSkeleton.tsx"
 import SharePanel from "./SharePanel.tsx"
 import "./NotebookView.css"
 
+function useNotebookView(notebookId: string, readOnly: boolean) {
+  const store = useNotebookStore()
+  useEffect(() => {
+    if (!readOnly) {
+      void store.loadNotebook(notebookId)
+    }
+  }, [notebookId, readOnly, store])
+  return store
+}
+
 export type NotebookViewProps = {
   notebookId: string
   readOnly?: boolean
 }
 
 export default function NotebookView({ notebookId, readOnly = false }: NotebookViewProps) {
-  useNotebookShortcuts()
-  const store = useNotebookStore()
+  if (!readOnly) useNotebookShortcuts()
+  const store = useNotebookView(notebookId, readOnly)
   const { notebook, cells, loading, error } = store
   const [title, setTitle] = useState("")
-
-  useEffect(() => {
-    void store.loadNotebook(notebookId)
-  }, [notebookId])
 
   useEffect(() => {
     if (notebook) setTitle(notebook.title)
@@ -34,6 +41,7 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
   }
 
   function addCell(kind: CellKind) {
+    if (readOnly) return
     store.addCell(kind)
   }
 
@@ -42,33 +50,45 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
   }
 
   if (error) {
-    return <div className="notebook-view__error">{error}</div>
+    return (
+      <EmptyState
+        icon="⚠️"
+        title="No se pudo cargar el notebook"
+        message={error || "Ocurrió un error inesperado. Intentá de nuevo."}
+      />
+    )
   }
 
   if (!notebook) {
-    return <div className="notebook-view__empty">Notebook no encontrado.</div>
+    return (
+      <EmptyState
+        icon="🔭"
+        title="Notebook no encontrado"
+        message="Puede haber sido eliminado o el enlace ser incorrecto."
+      />
+    )
   }
 
   return (
-    <div className="notebook-view">
+    <main className="notebook-view" role="main" id="main-content" tabIndex={-1}>
       <header className="notebook-view__header">
         <input
           className="notebook-view__title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => readOnly ? undefined : setTitle(e.target.value)}
           onBlur={handleTitleBlur}
           readOnly={readOnly}
           aria-label="Título del notebook"
         />
         {!readOnly && (
           <div className="notebook-view__actions">
-            <Button size="sm" variant="secondary" onClick={() => addCell("math")}>
+            <Button size="sm" variant="secondary" onClick={() => addCell("math")} aria-label="Añadir celda matemática">
               + Celda
             </Button>
-            <Button size="sm" variant="secondary" onClick={() => addCell("text")}>
+            <Button size="sm" variant="secondary" onClick={() => addCell("text")} aria-label="Añadir celda de texto">
               + Texto
             </Button>
-            <Button size="sm" variant="secondary" onClick={() => addCell("plot")}>
+            <Button size="sm" variant="secondary" onClick={() => addCell("plot")} aria-label="Añadir celda de gráfico">
               + Gráfico
             </Button>
           </div>
@@ -77,7 +97,7 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
       <CellList readOnly={readOnly} />
       {!readOnly && cells.length > 0 && (
         <div className="notebook-view__footer">
-          <Button size="md" variant="primary" onClick={() => addCell("math")}>
+          <Button size="md" variant="primary" onClick={() => addCell("math")} aria-label="Añadir celda matemática">
             + Añadir celda
           </Button>
         </div>
@@ -89,6 +109,6 @@ export default function NotebookView({ notebookId, readOnly = false }: NotebookV
           initialSlug={notebook.publicSlug}
         />
       )}
-    </div>
+    </main>
   )
 }

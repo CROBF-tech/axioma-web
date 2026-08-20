@@ -3,6 +3,7 @@ import type { SyncQueueEntry } from "@axioma/shared"
 import { useOnlineStatus } from "../hooks/useOnlineStatus.ts"
 import { OfflineBadge } from "../features/sync/OfflineBadge.tsx"
 import { countPendingSync, listSyncQueue } from "../data/syncQueue.ts"
+import SkipLink from "./SkipLink.tsx"
 import "./Header.css"
 
 export function Header() {
@@ -28,7 +29,8 @@ export function Header() {
   }, [online])
 
   return (
-    <header className="app-header">
+    <header className="app-header" role="banner">
+      <SkipLink />
       <div className="app-header__brand">
         <a href="/" className="app-header__logo">Axioma</a>
       </div>

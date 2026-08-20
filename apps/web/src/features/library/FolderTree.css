@@ -34,9 +34,9 @@
 }
 
 .folder-tree__expand {
-  flex: 0 0 1.25rem;
-  width: 1.25rem;
-  height: 1.25rem;
+  flex: 0 0 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -45,12 +45,17 @@
   color: var(--text);
   font-size: 0.75rem;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 0;
 }
 
 .folder-tree__expand:hover {
   background: var(--accent-bg);
+}
+
+.folder-tree__expand:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .folder-tree__expand--placeholder {
@@ -64,6 +69,19 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem -0.5rem;
+}
+
+.folder-tree__label:focus-visible,
+.folder-tree__row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.folder-tree__row:focus-visible {
+  background: var(--accent-bg);
 }
 
 .folder-tree__actions {
@@ -104,7 +122,7 @@
   gap: 0.5rem;
 }
 
-.folder-tree__move select {
+.folder-tree__move-select {
   flex: 1;
   font-family: var(--sans);
   font-size: 0.875rem;
@@ -113,4 +131,15 @@
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0.5rem 0.625rem;
+}
+
+.folder-tree__move-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.folder-tree__move-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

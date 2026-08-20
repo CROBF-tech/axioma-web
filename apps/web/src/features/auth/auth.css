@@ -70,10 +70,16 @@
 
 .auth__link {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: 500;
+  border-radius: 4px;
 }
 
 .auth__link:hover {
-  text-decoration: underline;
+  color: var(--fg);
+}
+
+.auth__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

@@ -1,7 +1,9 @@
+import { useMemo } from "react"
 import { Button, Card, Input } from "../../components/ui/index.ts"
 import { AccentPicker } from "../../theme/AccentPicker.tsx"
 import { useTheme } from "../../theme/useTheme.ts"
 import type { Theme } from "../../theme/ThemeProvider.tsx"
+import { passesAA } from "../../utils/contrast.ts"
 import "./DesignPage.css"
 
 const THEME_OPTIONS: Theme[] = ["light", "dark", "system"]
@@ -117,16 +119,47 @@ export default function DesignPage() {
 
       <section className="design__section">
         <h2 className="design__section-title">Contraste WCAG AA</h2>
-        <div className="design__a11y">
-          <span className="design__a11y-title">Verificación AA</span>
-          <span className="design__a11y-text">
-            Contraste --text-h sobre --bg cumple WCAG AA (≥ 4.5:1) en light y dark.
-          </span>
-          <span className="design__a11y-text">
-            Contraste --accent sobre --accent-fg cumple AA en ambos modos.
-          </span>
-        </div>
+        <ContrastChecks />
       </section>
     </main>
+  )
+}
+
+function ContrastChecks() {
+  const checks = useMemo(() => {
+    const root = document.documentElement
+    const get = (name: string) => getComputedStyle(root).getPropertyValue(name).trim()
+    const bg = get("--bg") || "#ffffff"
+    const fg = get("--fg") || "#1c1c1f"
+    const text = get("--text") || "#6b6375"
+    const textH = get("--text-h") || "#08060d"
+    const accent = get("--accent") || "#4f46e5"
+    const accentFg = get("--accent-fg") || "#ffffff"
+    const danger = get("--danger") || "#dc2626"
+    const success = get("--success") || "#15803d"
+    const warning = get("--warning") || "#b45309"
+    return [
+      { name: "--text-h sobre --bg", fg: textH, bg },
+      { name: "--fg sobre --bg", fg, bg },
+      { name: "--text sobre --bg", fg: text, bg },
+      { name: "--accent-fg sobre --accent", fg: accentFg, bg: accent },
+      { name: "--danger sobre --bg", fg: danger, bg },
+      { name: "--success sobre --bg", fg: success, bg },
+      { name: "--warning sobre --bg", fg: warning, bg },
+    ]
+  }, [])
+
+  return (
+    <div className="design__a11y-grid">
+      {checks.map(({ name, fg, bg }) => {
+        const ok = passesAA(fg, bg)
+        return (
+          <div key={name} className={["design__a11y-card", ok ? "design__a11y-card--pass" : "design__a11y-card--fail"].join(" ")}>
+            <span className="design__a11y-card-name">{name}</span>
+            <span className="design__a11y-card-result">{ok ? "Pasa AA" : "No pasa AA"}</span>
+          </div>
+        )
+      })}
+    </div>
   )
 }

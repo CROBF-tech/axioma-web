@@ -33,6 +33,7 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
   }
 
   function handleInputChange(value: string) {
+    if (readOnly) return
     store.updateCellInput(cell.id, value)
   }
 
@@ -66,7 +67,20 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
     >
       <div className="cell__toolbar">
         {!readOnly && (
-          <span className="cell__drag-handle" {...attributes} {...listeners} aria-label="Reordenar celda" role="button" tabIndex={0}>
+          <span
+            className="cell__drag-handle"
+            {...attributes}
+            {...listeners}
+            aria-label="Reordenar celda"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                listeners?.onPointerDown?.(e as unknown as React.PointerEvent)
+              }
+            }}
+          >
             ⋮⋮
           </span>
         )}
@@ -74,14 +88,14 @@ export default function Cell({ cell, active, readOnly = false, onActivate }: Cel
         {!readOnly && (
           <div className="cell__actions">
             <span className="cell__kind">{cell.kind}</span>
-            {cell.kind === "math" && (
-              <Button size="sm" variant="primary" onClick={handleRun} disabled={runtime?.running}>
-                {runtime?.running ? "Ejecutando..." : "▶ Ejecutar"}
-              </Button>
-            )}
-            <Button size="sm" variant="ghost" onClick={handleRemove}>
-              ×
+          {cell.kind === "math" && (
+            <Button size="sm" variant="primary" onClick={handleRun} disabled={runtime?.running} aria-label={runtime?.running ? "Ejecutando" : "Ejecutar celda"}>
+              {runtime?.running ? "Ejecutando..." : "▶ Ejecutar"}
             </Button>
+          )}
+          <Button size="sm" variant="ghost" onClick={handleRemove} aria-label="Eliminar celda">
+            ×
+          </Button>
           </div>
         )}
       </div>

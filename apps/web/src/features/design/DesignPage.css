@@ -135,22 +135,47 @@
   color: var(--text);
 }
 
-.design__a11y {
+.design__a11y-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.design__a11y-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
   padding: 1rem 1.25rem;
-  background: var(--success-bg);
-  border: 1px solid var(--success);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 
-.design__a11y-title {
-  color: var(--success);
+.design__a11y-card--pass {
+  background: var(--success-bg);
+  border-color: var(--success);
+}
+
+.design__a11y-card--fail {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+
+.design__a11y-card-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.design__a11y-card-result {
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 
-.design__a11y-text {
-  color: var(--text-h);
-  font-size: 0.9rem;
+.design__a11y-card--pass .design__a11y-card-result {
+  color: var(--success);
+}
+
+.design__a11y-card--fail .design__a11y-card-result {
+  color: var(--danger);
 }

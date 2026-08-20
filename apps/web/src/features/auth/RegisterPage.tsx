@@ -55,10 +55,12 @@ export default function RegisterPage() {
               id="register-name"
               type="text"
               autoComplete="name"
+              autoFocus
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
+              aria-invalid={error !== null}
             />
           </div>
 
@@ -74,6 +76,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
+              aria-invalid={error !== null}
             />
           </div>
 
@@ -89,6 +92,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
+              aria-invalid={error !== null}
             />
           </div>
 

@@ -9,3 +9,6 @@ export type { CardProps } from "./Card.tsx"
 
 export { Skeleton } from "./Skeleton.tsx"
 export type { SkeletonProps } from "./Skeleton.tsx"
+
+export { EmptyState } from "./EmptyState.tsx"
+export type { EmptyStateProps } from "./EmptyState.tsx"

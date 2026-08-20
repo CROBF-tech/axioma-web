@@ -48,7 +48,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
   color: var(--text);
   cursor: grab;
   opacity: 0;
@@ -56,6 +57,7 @@
   user-select: none;
   font-size: 0.875rem;
   line-height: 1;
+  border-radius: 6px;
 }
 
 .cell:hover .cell__drag-handle {
@@ -64,10 +66,17 @@
 
 .cell__drag-handle:hover {
   opacity: 1;
+  background: var(--accent-bg);
 }
 
 .cell__drag-handle:active {
   cursor: grabbing;
+}
+
+.cell__drag-handle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  opacity: 1;
 }
 
 .cell__actions {

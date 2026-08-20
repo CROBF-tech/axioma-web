@@ -54,10 +54,12 @@ export default function LoginPage() {
               id="login-email"
               type="email"
               autoComplete="email"
+              autoFocus
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
+              aria-invalid={error !== null}
             />
           </div>
 
@@ -73,6 +75,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
+              aria-invalid={error !== null}
             />
           </div>
 

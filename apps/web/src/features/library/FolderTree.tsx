@@ -143,7 +143,7 @@ function FolderTreeItem({
         )}
         {children.length === 0 && <span className="folder-tree__expand folder-tree__expand--placeholder" />}
 
-        {mode === "rename" ? (
+        {mode === "rename" && (
           <Input
             className="folder-tree__rename-input"
             value={editName}
@@ -159,10 +159,20 @@ function FolderTreeItem({
             autoFocus
             onClick={(e) => e.stopPropagation()}
           />
-        ) : (
+        )}
+
+        {mode !== "rename" && (
           <span
             className="folder-tree__label"
             onClick={() => onSelect(folder.id)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                onSelect(folder.id)
+              }
+            }}
           >
             {folder.name}
           </span>
@@ -174,6 +184,7 @@ function FolderTreeItem({
               variant="ghost"
               size="sm"
               className="folder-tree__action-btn"
+              aria-label="Nueva subcarpeta"
               onClick={(e) => {
                 e.stopPropagation()
                 setMode("newSubfolder")
@@ -185,6 +196,7 @@ function FolderTreeItem({
               variant="ghost"
               size="sm"
               className="folder-tree__action-btn"
+              aria-label="Renombrar carpeta"
               onClick={(e) => {
                 e.stopPropagation()
                 setMode("rename")
@@ -196,6 +208,7 @@ function FolderTreeItem({
               variant="ghost"
               size="sm"
               className="folder-tree__action-btn"
+              aria-label="Mover carpeta"
               onClick={(e) => {
                 e.stopPropagation()
                 setMode("move")
@@ -207,6 +220,7 @@ function FolderTreeItem({
               variant="ghost"
               size="sm"
               className="folder-tree__action-btn folder-tree__action-btn--danger"
+              aria-label="Eliminar carpeta"
               onClick={(e) => {
                 e.stopPropagation()
                 handleDelete()
@@ -228,6 +242,7 @@ function FolderTreeItem({
             value={subName}
             placeholder="Nueva subcarpeta"
             onChange={(e) => setSubName(e.target.value)}
+            onBlur={createSubfolder}
             onKeyDown={(e) => {
               if (e.key === "Enter") createSubfolder()
               if (e.key === "Escape") {
@@ -246,8 +261,12 @@ function FolderTreeItem({
           style={{ paddingLeft: `${(depth + 1) * 1.25 + 0.75}rem` }}
         >
           <select
+            className="folder-tree__move-select"
             value={folder.parentId ?? ""}
             onChange={(e) => handleMoveParent(e.target.value || null)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setMode("idle")
+            }}
             autoFocus
           >
             <option value="">Raíz</option>
@@ -311,6 +330,14 @@ export default function FolderTree({
           <div
             className={["folder-tree__row", selectedId === null && "folder-tree__row--selected"].filter(Boolean).join(" ")}
             onClick={() => onSelect(null)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                onSelect(null)
+              }
+            }}
           >
             <span className="folder-tree__expand folder-tree__expand--placeholder" />
             <span className="folder-tree__label">Raíz</span>

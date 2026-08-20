@@ -12,6 +12,7 @@ import {
 import FolderTree from "./FolderTree.tsx"
 import NotebookItem from "./NotebookItem.tsx"
 import LibrarySkeleton from "./LibrarySkeleton.tsx"
+import { EmptyState } from "../../components/ui/index.ts"
 import "./LibraryPage.css"
 
 export default function LibraryPage() {
@@ -35,7 +36,8 @@ export default function LibraryPage() {
       setFolders(foldersRes.items)
       setNotebooks(notebooksRes.items)
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al cargar la biblioteca")
+      const message = e instanceof Error ? e.message : "Ocurrió un error inesperado"
+      setError(`No se pudo cargar la biblioteca: ${message}`)
     } finally {
       setIsLoading(false)
     }
@@ -84,13 +86,14 @@ export default function LibraryPage() {
 
   return (
     <div className="library-page">
-      <aside className="library-page__sidebar">
+      <aside className="library-page__sidebar" role="complementary" aria-label="Navegación de biblioteca">
         <header className="library-page__sidebar-header">
           <h2 className="library-page__sidebar-title">Biblioteca</h2>
           <Button
             size="sm"
             variant="secondary"
             onClick={() => setNewFolderName("")}
+            aria-label="Crear nueva carpeta"
           >
             + Carpeta
           </Button>
@@ -111,30 +114,33 @@ export default function LibraryPage() {
             />
           </div>
         )}
-        <FolderTree
-          folders={folders}
-          selectedId={currentFolderId}
-          onSelect={setCurrentFolderId}
-          onChange={loadData}
-        />
+        <nav aria-label="Carpetas">
+          <FolderTree
+            folders={folders}
+            selectedId={currentFolderId}
+            onSelect={setCurrentFolderId}
+            onChange={loadData}
+          />
+        </nav>
       </aside>
-      <main className="library-page__main">
+      <main className="library-page__main" role="main" id="main-content" tabIndex={-1}>
         <header className="library-page__main-header">
           <h1 className="library-page__title">
             {currentFolderId === null ? "Raíz" : folders.find((f) => f.id === currentFolderId)?.name ?? "Carpeta"}
           </h1>
-          <Button size="sm" variant="primary" onClick={handleCreateNotebook}>
+          <Button size="sm" variant="primary" onClick={handleCreateNotebook} aria-label="Crear nuevo notebook">
             + Nuevo notebook
           </Button>
         </header>
 
         {currentNotebooks.length === 0 ? (
-          <div className="library-page__empty-state">
-            <p className="library-page__empty-text">No hay notebooks en esta carpeta.</p>
-            <Button size="md" variant="primary" onClick={handleCreateNotebook}>
-              Crear primer notebook
-            </Button>
-          </div>
+          <EmptyState
+            icon="📝"
+            title="Sin notebooks todavía"
+            message="Creá el primero para empezar a trabajar."
+            actionLabel="Crear primer notebook"
+            onAction={handleCreateNotebook}
+          />
         ) : (
           <ul className="library-page__notebook-list">
             {currentNotebooks.map((notebook) => (

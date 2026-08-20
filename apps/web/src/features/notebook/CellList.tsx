@@ -1,6 +1,7 @@
 import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core"
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { useNotebookStore } from "../../store/notebook.ts"
+import { EmptyState } from "../../components/ui/index.ts"
 import Cell from "./Cell.tsx"
 import "./CellList.css"
 
@@ -32,9 +33,11 @@ export default function CellList({ readOnly = false }: CellListProps) {
 
   if (cells.length === 0) {
     return (
-      <div className="cell-list__empty">
-        <p>Este notebook está vacío. Añade una celda para empezar.</p>
-      </div>
+      <EmptyState
+        icon="🧮"
+        title="Notebook vacío"
+        message="Añadí una celda para empezar a calcular o escribir."
+      />
     )
   }
 
