@@ -24,7 +24,7 @@ export function requiresSubscription(method: string, path: string): boolean {
   return false;
 }
 
-function matchPath(pattern: string, path: string): boolean {
+export function matchPath(pattern: string, path: string): boolean {
   const patternParts = pattern.split("/").filter(Boolean);
   const pathParts = path.split("/").filter(Boolean);
   if (patternParts.length !== pathParts.length) return false;
